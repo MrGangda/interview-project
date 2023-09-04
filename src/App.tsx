@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import Header from "./components/Header/Header";
 import {CircularProgress, Container} from "@mui/material";
@@ -7,10 +7,20 @@ import {ItemListWrapper} from "./styled";
 import {AppDispatch, RootState} from "./store/store";
 import {useDispatch, useSelector} from "react-redux";
 import {setProducts} from "./store/productSlice";
+import {ICardItem} from "./components/CardItem/CardItemInterface";
 
 function App() {
     const dispatch: AppDispatch = useDispatch();
-    const products = useSelector((state: RootState) => state.products.products);
+    const products: ICardItem[] = useSelector((state: RootState) => state.products.products);
+
+    const [filterType, setFilterType] = useState<'title' | 'category'>('title');
+    const [searchText, setSearchText] = useState('');
+
+    const filteredProducts = products.filter((product) => {
+        return filterType === 'title'
+            ? product.title.includes(searchText)
+            : product.category.includes(searchText);
+    });
 
     useEffect(() => {
         (async () => {
@@ -26,11 +36,17 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
+        <Header
+            setFilterType={setFilterType}
+            setSearchText={setSearchText}
+            filterType={filterType}
+            searchText={searchText}
+        />
         <Container style={{display: 'flex', justifyContent: 'center'}} maxWidth={'lg'} >
             <ItemListWrapper>
-                {!!products.length ? products?.map((item) =>
+                {!!filteredProducts.length ? filteredProducts?.map((item) =>
                     <CardItem
+                        key={item.id}
                         brand={item.brand}
                         category={item.category}
                         description={item.description}

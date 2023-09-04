@@ -1,8 +1,27 @@
-import React from 'react';
-import {Button, Container, Select, TextField} from "@mui/material";
+import React, {FC} from 'react';
+import {Button, Container, MenuItem, Select, SelectChangeEvent, TextField} from "@mui/material";
 import {HeaderWrapper, SearchFieldWrapper} from "./styled";
 
-const Header = () => {
+
+type HeaderProps = {
+  setFilterType: React.Dispatch<React.SetStateAction<'title' | 'category'>>;
+  setSearchText: React.Dispatch<React.SetStateAction<string>>;
+  filterType?: 'title' | 'category';
+  searchText?: string;
+};
+
+const Header: FC<HeaderProps> = ({ setFilterType, setSearchText, filterType, searchText }) => {
+
+  const handleSearchTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const text = event.target.value;
+    setSearchText(text);
+  };
+
+  const handleFilterTypeChange = (event: SelectChangeEvent<'title' | 'category'>): void => {
+    const type = event.target.value as 'title' | 'category';
+    setFilterType(type);
+  };
+
   return (
     <HeaderWrapper>
       <Container style={{ display: 'flex', alignItems: 'flex-end'}} maxWidth={'lg'}>
@@ -11,7 +30,22 @@ const Header = () => {
         <Button style={{ padding: '0 6px'}} title={'Contact us'}>Contact us</Button>
         <SearchFieldWrapper>
           <form noValidate autoComplete="off">
-            <TextField style={{width: '600px'}} variant={'standard'} id="standard-basic" label="Standard" fullWidth={true} />
+            <TextField
+                style={{width: '400px'}}
+                variant={'standard'}
+                id="standard-basic"
+                label="Search product"
+                value={searchText}
+                onChange={handleSearchTextChange}
+            />
+            <Select
+                value={filterType}
+                onChange={handleFilterTypeChange}
+                style={{ marginLeft: '20px' }}
+            >
+              <MenuItem value={'title'}>Title</MenuItem>
+              <MenuItem value={'category'}>Category</MenuItem>
+            </Select>
           </form>
         </SearchFieldWrapper>
       </Container>
