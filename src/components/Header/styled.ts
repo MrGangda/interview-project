@@ -8,4 +8,5 @@ export const HeaderWrapper = styled.div`
 
 export const SearchFieldWrapper = styled.div`
   margin-left: auto;
+  //height: 50px;
 `;

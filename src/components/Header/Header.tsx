@@ -5,13 +5,13 @@ import {HeaderWrapper, SearchFieldWrapper} from "./styled";
 const Header = () => {
   return (
     <HeaderWrapper>
-      <Container style={{ display: 'flex'}} maxWidth={'lg'}>
-        <Button title={'About us'}>About us</Button>
-        <Button title={'Products'}>Products</Button>
-        <Button title={'Contact us'}>Contact us</Button>
+      <Container style={{ display: 'flex', alignItems: 'flex-end'}} maxWidth={'lg'}>
+        <Button style={{ padding: '0 6px'}} title={'About us'}>About us</Button>
+        <Button style={{ padding: '0 6px'}} title={'Products'}>Products</Button>
+        <Button style={{ padding: '0 6px'}} title={'Contact us'}>Contact us</Button>
         <SearchFieldWrapper>
           <form noValidate autoComplete="off">
-            <TextField id="standard-basic" label="Standard" fullWidth={true} />
+            <TextField style={{width: '600px'}} variant={'standard'} id="standard-basic" label="Standard" fullWidth={true} />
           </form>
         </SearchFieldWrapper>
       </Container>
