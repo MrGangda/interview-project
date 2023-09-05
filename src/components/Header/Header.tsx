@@ -41,7 +41,7 @@ const Header: FC<HeaderProps> = ({ setFilterType, setSearchText, filterType, sea
             <Select
                 value={filterType}
                 onChange={handleFilterTypeChange}
-                style={{ marginLeft: '20px' }}
+                style={{ marginLeft: '20px', width: '150px' }}
             >
               <MenuItem value={'title'}>Title</MenuItem>
               <MenuItem value={'category'}>Category</MenuItem>
